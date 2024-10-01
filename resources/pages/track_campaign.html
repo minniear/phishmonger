@@ -136,6 +136,19 @@
 
         function showEvent(new_event, reDraw) {
           let human_timestamp = new Date(new_event.event_timestamp).toLocaleString()
+          if (new_event.event_type == 'POST_DATA') {
+            $("#events").append(` \
+            <tr>\
+              <td>${human_timestamp}</td>\
+              <td><a href="https://www.infobyip.com/ip-${new_event.event_ip}.html" target="_blank">${new_event.event_ip}</a></td>\
+              <td><a href="/view_target?target_id=${new_event.target}">${new_event.target}</a></td>\
+              <td>${new_event.event_type}</td>\
+              <td class="data-cell">${decodeURIComponent(new_event.event_data)}</td>\
+            </tr>\
+          `)
+          }
+          else
+          {
           $("#events").append(` \
             <tr>\
               <td>${human_timestamp}</td>\
@@ -145,6 +158,7 @@
               <td class="data-cell">${new_event.event_data}</td>\
             </tr>\
           `)
+          }
           converted_time = new Date(new_event.event_timestamp).toISOString()
           if (new_event.event_type == 'EMAIL_SENT') {
             window.campaignMetrics.sent_emails += 1

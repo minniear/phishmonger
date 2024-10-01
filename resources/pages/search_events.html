@@ -43,7 +43,7 @@
 
         function ignoreEvent(row) {
           let row_cells = row.children()
-          let timestamp = $(row_cells[0]).text()
+          let timestamp = $(row_cells[5]).text()
           let source = $(row_cells[1]).text()
           let target = $(row_cells[2]).text()
           let event_type = $(row_cells[3]).text()
@@ -70,13 +70,15 @@
         }
 
         function showEvent(new_event) {
+          let human_timestamp = new Date(new_event.event_timestamp * 1000)
           $("#events").append(` \
             <tr class="search_result">\
-              <td>${new_event.event_timestamp}</td>\
+              <td>${human_timestamp}</td>\
 	            <td><a href="https://www.infobyip.com/ip-${new_event.event_ip}.html" target="_blank">${new_event.event_ip}</a></td>\
 	            <td><a href="/view_target?target_id=${new_event.target}">${new_event.target}</a></td>\
               <td>${new_event.event_type}</td>\
               <td class="data_cell">${new_event.event_data}</td>\
+              <td hidden>${new_event.event_timestamp}</td>\
               <td class="button_cell"><button class="btn btn-primary ignore_button">Ignore This Event</button></td>\
             </tr>\
           `);
